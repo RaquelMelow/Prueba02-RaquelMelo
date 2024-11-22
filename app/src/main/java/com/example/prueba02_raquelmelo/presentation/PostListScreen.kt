@@ -92,22 +92,30 @@ fun PostList(posts: List<Post>) {
 
 @Composable
 fun PostItem(post: Post) {
+    val randomColor = remember { generateRandomColor() }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.LightGray,
-            contentColor = Color.Black,
-        ),
-        border = BorderStroke(2.dp, color = Color.Black),
+            .padding(8.dp),
+        colors = CardDefaults.cardColors(containerColor = randomColor),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = "User ID: ${post.userId}", style = MaterialTheme.typography.labelSmall)
+            Text(text = "ID: ${post.id}", style = MaterialTheme.typography.labelSmall)
             Text(text = post.title, style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(4.dp))
             Text(text = post.body, style = MaterialTheme.typography.bodyMedium)
         }
     }
+}
+
+fun generateRandomColor(): Color {
+    val random = java.util.Random()
+    return Color(
+        red = (random.nextInt(128) + 127).toFloat() / 255,
+        green = (random.nextInt(128) + 127).toFloat() / 255,
+        blue = (random.nextInt(128) + 127).toFloat() / 255
+    )
 }
